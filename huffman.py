@@ -128,41 +128,6 @@ class HuffmanTree:
         self.get_huffman_code(unmerged_node[0][2].right_child)
 
 
-# class HuffmanTree:
-#     def __init__(self, word_frequency):
-#         self.word_count = len(word_frequency)
-#         self.huffman = []
-#         unmerged_node = []
-#         word_frequency_list = []
-#         for index, value in word_frequency.items():
-#             word_frequency_list.append(value)
-#         print(word_frequency_list)
-#         flag = True
-#         for wid, c in word_frequency.items():
-#         # for wid, c in enumerate(word_frequency_list):
-#             node = Node(wid, c)
-#             Heap.heappush(unmerged_node, (c, node))
-#             self.huffman.append(node)
-#         next_id = len(self.huffman)
-#         while len(unmerged_node) > 1:
-#             _, node1 = Heap.heappop(unmerged_node)
-#             _, node2 = Heap.heappop(unmerged_node)
-#             new_node = Node(next_id, node1.frequency + node2.frequency)
-#             node1.father = new_node.wid
-#             node2.father = new_node.wid
-#             new_node.left_child = node1.wid
-#             node1.is_left_child = True
-#             new_node.right_child = node2.wid
-#             node2.is_left_child = False
-#             self.huffman.append(new_node)
-#             Heap.heappush(unmerged_node, (new_node.frequency, new_node))
-#             next_id = len(self.huffman)
-#
-#
-#         self.get_huffman_code(unmerged_node[0][1].left_child)
-#         self.get_huffman_code(unmerged_node[0][1].right_child)
-
-
     def get_huffman_code(self, wid):
         # print("huffman code", wid)
         if self.huffman[wid].is_left_child:

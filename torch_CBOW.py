@@ -1,5 +1,5 @@
 """ A PyTorch implementation of CBOW word embedding mechanism. """
-
+##
 import torch
 import torch.nn as nn
 import torch.optim as opt
@@ -29,12 +29,13 @@ for i in range(2, len(corpus) - 2):
     # Context, target
     bow = ([corpus[i - 2], corpus[i - 1], corpus[i + 1], corpus[i + 2]], corpus[i])
     data.append(bow)
-
-
+print(data)
+##
 class CBOW(nn.Module):
     def __init__(self, vocab_size, context_size, embed_dim, hidden_size):
         super(CBOW, self).__init__()
         self.embed_layer = nn.Embedding(vocab_size, embed_dim)
+        #底层embedding就是一个dnn.加softmax.
         self.linear_1 = nn.Linear(2 * context_size * embed_dim, hidden_size)
         self.linear_2 = nn.Linear(hidden_size, vocab_size)
 
@@ -43,7 +44,7 @@ class CBOW(nn.Module):
         output = F.relu(self.linear_1(embeds))
         output = F.log_softmax(self.linear_2(output))
         return output
-
+##
 
 # Helper function
 def context_to_tensor(context, idx_dict):
@@ -55,7 +56,7 @@ def context_to_tensor(context, idx_dict):
 model = CBOW(len(vocab), CONTEXT_SIZE, EMBED_DIM, HIDDEN_SIZE)
 loss_function = nn.NLLLoss()
 optimizer = opt.Adam(model.parameters(), lr=LR)
-
+##
 # Training loop
 for e in range(NUM_EPOCHS):
     total_loss = torch.FloatTensor([0])

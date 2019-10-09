@@ -24,6 +24,10 @@ class SkipGramModel(nn.Module):
         emb_u = self.u_embeddings(Variable(torch.LongTensor(pos_u)))
         emb_v = self.v_embeddings(Variable(torch.LongTensor(pos_v)))
         score = torch.mul(emb_u, emb_v)
+        '''
+        torch.mul(a, b)是矩阵a和b对应位相乘，a和b的维度必须相等，
+        比如a的维度是(1, 2)，b的维度是(1, 2)，返回的仍是(1, 2)的矩阵
+        '''
         score = torch.sum(score, dim=1)
         score = F.logsigmoid(score)
         losses.append(sum(score))
@@ -33,7 +37,7 @@ class SkipGramModel(nn.Module):
         neg_score = torch.sum(neg_score, dim=1)
         neg_score = F.logsigmoid(-1 * neg_score)
         losses.append(sum(neg_score))
-        return -1 * sum(losses)
+        return -1 * sum(losses)#注意这里面最后,又取了一个负号.
 
     def save_embedding(self, id2word, file_name):
         embedding = self.u_embeddings.weight.data.numpy()
@@ -61,24 +65,6 @@ class CBOW(nn.Module):
 
     def forward(self, pos_u, pos_v, neg_u, neg_v):
 
-        # pos_u_m = []
-        # for i in range(len(pos_u)):
-        #     # print((pos_u[i]))
-        #     pos_sum = 0
-        #     for j in range(len(pos_u[i])):
-        #         pos_sum += pos_u[i][j]
-        #     pos_u_m.append(int(pos_sum))
-        # # print(pos_u_m)
-        #
-        # neg_u_m = []
-        # for i in range(len(neg_u)):
-        #     # print((neg_u[i]))
-        #     neg_sum = 0
-        #     for j in range(len(neg_u[i])):
-        #         neg_sum += neg_u[i][j]
-        #     neg_u_m.append(neg_sum)
-        # print(neg_u_m)
-
         losses = []
         emb_u = []
         for i in range(len(pos_u)):
@@ -91,16 +77,7 @@ class CBOW(nn.Module):
         score = F.logsigmoid(score)
         losses.append(sum(score))
 
-        # for i in range(len(pos_u)):
-        #     if i == 0:
-        #         temp = scores
-        #         continue
-        #     scores = torch.mul(emb_u[i], emb_v)
-        #     score = torch.mul(scores, temp)
-        #     # print(score)
-        #     temp = score
-        # score = torch.sum(score, dim=1)
-        # print(score)
+
 
         neg_emb_u = []
         for i in range(len(neg_u)):

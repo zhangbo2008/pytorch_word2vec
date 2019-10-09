@@ -65,7 +65,8 @@ class CBOWModel(nn.Module):
 
 
 def test():
-    model = CBOWModel(100, 100, 5)
+    a=200
+    model = CBOWModel(100, 200, 5)
     id2word = dict()
     for i in range(100):
         id2word[i] = str(i)
@@ -73,4 +74,4 @@ def test():
 
 
 if __name__ == '__main__':
-    test()
+    test()#测试一下初始值,直接返回embed矩阵.
